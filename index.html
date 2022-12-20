@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue3-easy-data-table</title>
+    <link
+      href="https://unpkg.com/vue3-easy-data-table/dist/style.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <easy-data-table
+        buttons-pagination
+        alternating
+        :headers="headers"
+        :items="items"
+        @click-row="showRow"
+      />
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.2.1/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/vue3-easy-data-table"></script>
+
+  <script>
+    const mockClientItems = (itemsNumber = 100) => {
+      const mockItems = [];
+      const sports = ["basketball", "football", "running", "swimming"];
+      const fruits = ["banana", "apple", "orange", "peach"];
+
+      for (let i = 1; i < itemsNumber + 1; i += 1) {
+        mockItems.push({
+          name: `name-${i}`,
+          address: `address-${i}`,
+          height: i,
+          weight: i,
+          age: i,
+          favouriteSport: sports[i % 4],
+          favouriteFruits: fruits[i % 4]
+        });
+      }
+      return mockItems;
+    };
+
+    const App = {
+      components: {
+        EasyDataTable: window["vue3-easy-data-table"]
+      },
+      data() {
+        return {
+          headers: [
+            { text: "Name", value: "name", width: 150, fixed: true },
+            { text: "Address", value: "address", width: 200 },
+            { text: "Height", value: "height", sortable: true, width: 200 },
+            { text: "Weight", value: "weight", sortable: true, width: 200 },
+            { text: "Age", value: "age", sortable: true, width: 200 },
+            { text: "Favourite sport", value: "favouriteSport", width: 200 },
+            { text: "Favourite fruits", value: "favouriteFruits", width: 200 }
+          ],
+          items: mockClientItems()
+        };
+      },
+      methods: {
+        showRow(item) {
+          alert(JSON.stringify(item));
+        }
+      }
+    };
+    Vue.createApp(App).mount("#app");
+  </script>
+</html>
